@@ -1,0 +1,120 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="lista_tareas.list">
+      <field name="name">lista_tareas list</field>
+      <field name="model">lista_tareas.lista_tareas</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="tarea"/>
+          <field name="prioridad"/>
+          <field name="urgente"/>
+          <field name="realizada"/>
+          <field name="fecha_inicio"/>
+          <field name="fecha_fin"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- kanban -->
+
+    <record model="ir.ui.view" id="lista_tareas.kanban">
+      <field name="name">lista_tareas kanban</field>
+      <field name="model">lista_tareas.lista_tareas</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="tarea"/>
+          <field name="prioridad"/>
+          <field name="urgente"/>
+          <field name="realizada"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_product_vignette">
+                <a type="open">
+                  <img class="o_image_64_contain"
+                  t-att-alt="record.tarea.value"
+                  t-att-src="kanban_image('lista_tareas.lista_tareas', 'image', record.id.raw_value)" />
+                </a>
+                <div class="oe_product_desc">
+                  <h4>
+                    <a type="edit">
+                      <field name="tarea"/>
+                    </a>
+                  </h4>
+                  <h6>
+                    <div>Prioridad: <field name="prioridad"/></div>
+                    <div>Urgente: <field name="urgente"/></div>
+                    <div>Realizada: <field name="realizada"/></div>
+                    <div>Fecha Inicio: <field name="fecha_inicio"/></div>
+                    <div>Fecha Fin: <field name="fecha_fin"/></div>
+                  </h6>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <!-- calendar -->
+
+    <record model="ir.ui.view" id="lista_tareas.calendar">
+      <field name="name">lista_tareas calendar</field>
+      <field name="model">lista_tareas.lista_tareas</field>
+      <field name="arch" type="xml">
+        <calendar string="Lista Tareas Calendar" date_start="fecha_inicio" date_stop="fecha_fin">
+          <field name="tarea"/>
+          <field name="prioridad"/>
+          <field name="urgente"/>
+          <field name="realizada"/>
+          <field name="fecha_inicio"/>
+          <field name="fecha_fin"/>
+        </calendar>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="lista_tareas.action_window">
+      <field name="name">Listado de tareas pendientes</field>
+      <field name="res_model">lista_tareas.lista_tareas</field>
+      <field name="view_mode">tree,form,kanban,calendar</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="lista_tareas.action_server">
+      <field name="name">lista_tareas server</field>
+      <field name="model_id" ref="model_lista_tareas_lista_tareas"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+
+    <menuitem name="Listado de tareas" id="lista_tareas.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Opciones Lista Tareas" id="lista_tareas.menu_1" parent="lista_tareas.menu_root"/>
+    <!-- <menuitem name="Menu 2" id="lista_tareas.menu_2" parent="lista_tareas.menu_root"/> -->
+
+    <!-- actions -->
+
+    <menuitem name="Mostrar lista" id="lista_tareas.menu_1_list" parent="lista_tareas.menu_1"
+              action="lista_tareas.action_window"/>
+    <!-- <menuitem name="Server to list" id="lista_tareas" parent="lista_tareas.menu_2"
+              action="lista_tareas.action_server"/> -->
+
+  </data>
+</odoo>

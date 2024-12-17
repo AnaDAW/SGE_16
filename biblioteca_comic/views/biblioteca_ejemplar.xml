@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Definimos como mostramos la vista en el modelo -->
+    <record id='biblioteca_ejemplar_action' model='ir.actions.act_window'>
+        <field name="name">Ejemplares de Comics</field>
+        <field name="res_model">biblioteca.ejemplar</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Simple menu item, sin más utilidad que la didáctica -->
+    <menuitem name="Ejemplares" id="biblioteca_ejemplar_menu" parent="biblioteca_base_menu" action="biblioteca_ejemplar_action"/>
+
+    <!-- Definición de la Vista formulario -->
+    <record id="biblioteca_ejemplar_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Ejemplar de Comics</field>
+        <field name="model">biblioteca.ejemplar</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="comic_id"/>
+                        <field name="prestado" readonly="1"/>
+                        <field name="socio_id"/>
+                    </group>
+                    <group invisible="prestado == False">
+                        <field name="fecha_inicio"/>
+                        <field name="fecha_fin"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Definición de la vista Tree -->
+    <record id="biblioteca_ejemplar_view_tree" model="ir.ui.view">
+        <field name="name">Lista de Ejemplares de Comics</field>
+        <field name="model">biblioteca.ejemplar</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="comic_id"/>
+                <field name="prestado"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
